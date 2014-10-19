@@ -20,16 +20,15 @@ StepsPerDay <- tapply(data$steps, data$date, sum)
 hist(StepsPerDay)
 ```
 
-Mean number of steps per day
-```{r}
+```{r meansteps}
 MeanSteps <- round(mean(StepsPerDay, na.rm=TRUE),1)
-print(MeanSteps)
 ```
-Median number of steps per day
-```{r}
+The mean number of steps per day is `r MeanSteps`.
+
+```{r mediansteps}
 MedianSteps <- median(StepsPerDay, na.rm=TRUE)
-print(MedianSteps)
 ```
+The median number of steps per day is `r MedianSteps`.
 
 ## What is the average daily activity pattern?
 The following graph will show the changes in the average number of steps over the course of a specified time interval.
@@ -41,20 +40,21 @@ plot(joined, type="l", xlab="Time Interval, min", ylab="Steps")
 title(main="Average Steps Taken Over Time Interval")
 ```
 
-The maximum averge number of steps is:
-```{r}
-max(joined[,2])
-```
-And this takes place over the interval of:
-```{r}
-interval[which.max(joined[,2])]
+```{r maximum}
+MaxAvg <- max(joined[,2])
 ```
 
-## Imputing missing values
-First, the number of missing values
-```{r}
-sum(is.na(data[,1]))
+```{r interval}
+MaxInterval <- interval[which.max(joined[,2])]
 ```
+The maximum average number of steps is `r MaxAvg`, and this takes place over the interval starting at `r MaxInterval` minutes.
+
+## Imputing missing values
+```{r missing}
+Missing <- sum(is.na(data[,1]))
+```
+
+This data has `r Missing` values.
 
 Next, a histogram with number of steps per day, using the interval average in place of an NA
 ```{r}
@@ -73,23 +73,25 @@ hist(AvgStepsPerDay)
 ```
 
 Next, mean number of steps per day
-```{r}
+```{r avgmeansteps}
 AvgMeanSteps <- round(mean(AvgStepsPerDay, na.rm=TRUE),1)
-print(AvgMeanSteps)
 ```
-Median number of steps per day
-```{r}
+
+```{r avgmediansteps}
 AvgMedianSteps <- round(median(AvgStepsPerDay, na.rm=TRUE),0)
-print(AvgMedianSteps)
 ```
-Difference in the means, with missing values minus without missing values:
-```{r}
-MeanSteps - AvgMeanSteps
+The mean number of steps per day is `r AvgMeanSteps` and the median number of steps per day is `r AvgMedianSteps`.
+
+```{r meandiff}
+MeanDiff <- MeanSteps - AvgMeanSteps
 ```
-Difference in the medians, with missing values minus without missing values:
-```{r}
-MedianSteps - AvgMedianSteps
+
+```{r mediandiff}
+MedianDiff <- MedianSteps - AvgMedianSteps
 ```
+The difference in means, with the mean (w/ missing values) minus the mean (w/o missing values) is: `r MeanDiff`
+The difference in medians, with the median (w/ missing values) minus the median (w/o missing values) is: `r MedianDiff`
+
 ## Are there differences in activity patterns between weekdays and weekends?
 
 These two plots will highlight the difference in activity patterns (via the average number of steps taken) between weekends and weekdays.

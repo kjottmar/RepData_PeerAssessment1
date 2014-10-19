@@ -19,26 +19,17 @@ hist(StepsPerDay)
 
 ![](./PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
 
-Mean number of steps per day
 
 ```r
 MeanSteps <- round(mean(StepsPerDay, na.rm=TRUE),1)
-print(MeanSteps)
 ```
+The mean number of steps per day is 1.07662\times 10^{4}.
 
-```
-## [1] 10766.2
-```
-Median number of steps per day
 
 ```r
 MedianSteps <- median(StepsPerDay, na.rm=TRUE)
-print(MedianSteps)
 ```
-
-```
-## [1] 10765
-```
+The median number of steps per day is 10765.
 
 ## What is the average daily activity pattern?
 The following graph will show the changes in the average number of steps over the course of a specified time interval.
@@ -51,37 +42,26 @@ plot(joined, type="l", xlab="Time Interval, min", ylab="Steps")
 title(main="Average Steps Taken Over Time Interval")
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
+![](./PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
 
-The maximum averge number of steps is:
-
-```r
-max(joined[,2])
-```
-
-```
-## [1] 206.17
-```
-And this takes place over the interval of:
 
 ```r
-interval[which.max(joined[,2])]
+MaxAvg <- max(joined[,2])
 ```
 
+
+```r
+MaxInterval <- interval[which.max(joined[,2])]
 ```
-## [1] 835
-```
+The maximum average number of steps is 206.17, and this takes place over the interval starting at 835 minutes.
 
 ## Imputing missing values
-First, the number of missing values
 
 ```r
-sum(is.na(data[,1]))
+Missing <- sum(is.na(data[,1]))
 ```
 
-```
-## [1] 2304
-```
+This data has 2304 values.
 
 Next, a histogram with number of steps per day, using the interval average in place of an NA
 
@@ -100,49 +80,35 @@ AvgStepsPerDay <- tapply(datawithavgs$steps, datawithavgs$date, sum)
 hist(AvgStepsPerDay)
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
+![](./PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
 
 Next, mean number of steps per day
 
 ```r
 AvgMeanSteps <- round(mean(AvgStepsPerDay, na.rm=TRUE),1)
-print(AvgMeanSteps)
 ```
 
-```
-## [1] 10766.2
-```
-Median number of steps per day
 
 ```r
 AvgMedianSteps <- round(median(AvgStepsPerDay, na.rm=TRUE),0)
-print(AvgMedianSteps)
 ```
+The mean number of steps per day is 1.07662\times 10^{4} and the median number of steps per day is 1.0766\times 10^{4}.
 
-```
-## [1] 10766
-```
-Difference in the means, with missing values minus without missing values:
 
 ```r
-MeanSteps - AvgMeanSteps
+MeanDiff <- MeanSteps - AvgMeanSteps
 ```
 
-```
-## [1] 0
-```
-Difference in the medians, with missing values minus without missing values:
 
 ```r
-MedianSteps - AvgMedianSteps
+MedianDiff <- MedianSteps - AvgMedianSteps
 ```
+The difference in means, with the mean (w/ missing values) minus the mean (w/o missing values) is: 0
+The difference in medians, with the median (w/ missing values) minus the median (w/o missing values) is: -1
 
-```
-## [1] -1
-```
 ## Are there differences in activity patterns between weekdays and weekends?
 
-These two plots will highlight the difference in activity patterns (via the average number of steps taken) between weekdays and weekends.
+These two plots will highlight the difference in activity patterns (via the average number of steps taken) between weekends and weekdays.
 
 
 ```r
@@ -164,4 +130,4 @@ plot(WkDayjoined, type="l", xlab="Time Interval, min", ylab="Steps",
 title(main="Avg. Steps Taken - Weekday")
 ```
 
-![](./PA1_template_files/figure-html/unnamed-chunk-14-1.png) 
+![](./PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
